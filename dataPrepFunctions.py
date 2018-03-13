@@ -77,7 +77,7 @@ def extractFromEvents(entryList):
         # reference point for errors
         count += 1
 
-    return entryInformation, errorIndex
+    return [entryInformation, errorIndex]
 
 
 
