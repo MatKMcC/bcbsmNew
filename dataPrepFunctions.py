@@ -16,12 +16,11 @@ def generateTuples(fhirs):
     :return: tuples containing (id, resourceType, date, system, code)
     """
 
-    # operates over the list
-    try:
+    # subset the list
+    if type(fhirs) == dict:
         fhirs = fhirs['entry']
-    except TypeError:
-        pass
 
+    # extract a list of tuples
     extractions = extractFromEvents(fhirs)
 
     for tup in extractions: yield tup
