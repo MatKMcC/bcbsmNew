@@ -4,7 +4,6 @@ relate to extracting specific resources from a FHIR bundle
 """
 
 
-
 from dsfunction.resources.maps import SYSTEM_URL_TO_SHORT_NAME_MAP as URL_SHORT
 
 
