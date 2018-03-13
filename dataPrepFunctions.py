@@ -18,7 +18,6 @@ def generateTuples(fhirs):
 
     # subset the list
     if type(fhirs) == dict:
-        print type(fhirs)
         fhirs = fhirs['entry']
 
     # extract a list of tuples
@@ -63,13 +62,10 @@ def extractFromEvents(entryList):
 
         except IndexError:
             extraction = ('IndexError')
-            errorIndex.append(count)
         except KeyError:
             extraction = ('KeyError')
-            errorIndex.append(count)
         except TypeError:
             extraction = ('TypeError')
-            errorIndex.append(count)
 
         # append the information that we are interested in
         if extraction: entryInformation.append(extraction)
@@ -77,7 +73,7 @@ def extractFromEvents(entryList):
         # reference point for errors
         count += 1
 
-    return [entryInformation, errorIndex]
+    return entryInformation
 
 
 
@@ -94,10 +90,10 @@ def conditionExtract(conditionEvent):
     entry = conditionEvent['resource']
 
     # extract patient ID - last eight numbers seem to be the same across
-    patientID = entry['patient']['reference'].split('/')[1]
+    patientID = entry['subject']['reference'].split('/')[1]
 
     # extract date - do I need validation on this? Are date structures the same always?
-    date = entry['dateRecorded']
+    date = entry['assertedDate'][:10]
 
     # extract system - match this to the appropriate code string
     system = URL_SHORT[entry['code']['coding'][0]['system']]
