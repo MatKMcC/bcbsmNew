@@ -62,10 +62,13 @@ def extractFromEvents(entryList):
 
         except IndexError:
             extraction = ('IndexError')
+            errorIndex.append(count)
         except KeyError:
             extraction = ('KeyError')
+            errorIndex.append(count)
         except TypeError:
             extraction = ('TypeError')
+            errorIndex.append(count)
 
         # append the information that we are interested in
         if extraction: entryInformation.append(extraction)
