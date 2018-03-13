@@ -8,6 +8,20 @@ relate to extracting specific resources from a FHIR bundle
 from dsfunction.resources.maps import SYSTEM_URL_TO_SHORT_NAME_MAP as URL_SHORT
 
 
+def flatten(container):
+    """
+    A recursive function to flatten nested list/tuples
+    :param container: A list or tuple that is potentially nested
+    :return: a flat tuple
+    """
+    for i in container:
+        if isinstance(i, (list,tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i
+
+
 def generateTuples(fhirs):
     """
     Take a list of JSON objects (FHIR), extract information
@@ -57,7 +71,7 @@ def extractFromEvents(entryList):
                 extraction = observationExtract(x)
             elif resourceType == 'Procedure':
                 extraction = procedureExtract(x)
-            elif resourceType == 'MedicationOrder':
+            elif resourceType == 'MedicationOrder' or resourceType == 'MedicationRequest':
                 extraction = medicationExtract(x)
 
         except IndexError:

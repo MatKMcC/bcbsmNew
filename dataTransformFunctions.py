@@ -30,7 +30,7 @@ def setColumnValues(keyValuePair):
         idx = [x + 1 for x in idx]
     elif resourceType == 'Observation':
         idx = [x + 2 for x in idx]
-    elif resourceType == 'MedicationOrder':
+    elif resourceType == 'MedicationOrder' or resourceType == 'MedicationRequest':
         idx = [x + 3 for x in idx]
 
     return {idx[0]: N, idx[1]: 1}
@@ -82,4 +82,7 @@ def flatten(keyValuePair):
     key = keyValuePair[0]
     value = keyValuePair[1]
 
-    return (key, value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7])
+    # create a flat tuple
+    tupes = tuple([key] + list(value))
+
+    return tupes

@@ -31,7 +31,7 @@ if __name__ == '__main__':
     tupes_counted = tupes.map(lambda x: (x, 1)).reduceByKey(lambda x, y: x + y)
 
     # flatten the results - better flatten function
-    tupes_counted = tupes_counted.map(lambda x: [x[0][0], x[0][1], x[0][2], x[0][3], x[0][3], x[1]])
+    tupes_counted = tupes_counted.map(lambda x: tuple(flatten(x)))
 
     # repartition and write out balanced RDDs
     tupes_counted.repartition(1000).map(lambda x: ', '.join(map(str,x))).saveAsTextFile(args.writePath)
