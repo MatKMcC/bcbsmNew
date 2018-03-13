@@ -43,5 +43,3 @@ if __name__ == '__main__':
 
     # write out the dataframe
     df.write.parquet(args.writePath)
-
-    row_rdd.map(lambda x: ', '.join(map(str,x))).saveAsTextFile(args.writePath)
