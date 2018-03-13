@@ -28,7 +28,7 @@ def setColumnValues(keyValuePair):
         idx = [x + 1 for x in idx]
     elif resourceType == 'Observation':
         idx = [x + 2 for x in idx]
-    elif resourceType == 'MedicineOrder':
+    elif resourceType == 'MedicationOrder':
         idx = [x + 3 for x in idx]
 
     return {idx[0]: N, idx[1]: 1}
