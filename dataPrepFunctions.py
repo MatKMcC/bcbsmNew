@@ -17,6 +17,7 @@ def generateTuples(fhirs):
 
     # subset the list
     if type(fhirs) == dict:
+        print type(fhirs)
         fhirs = fhirs['entry']
 
     # extract a list of tuples
