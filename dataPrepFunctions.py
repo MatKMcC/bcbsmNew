@@ -18,9 +18,11 @@ def generateTuples(fhirs):
 
     # operates over the list
     try:
-        extractions = extractFromEvents(fhirs['entry'])
+        fhirs = fhirs['entry']
     except TypeError:
-        extractions = extractFromEvents(fhirs)
+        pass
+
+    extractions = extractFromEvents(fhirs)
 
     for tup in extractions: yield tup
 
