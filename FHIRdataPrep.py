@@ -23,10 +23,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # read in the dataset filepath and load data
-    bundles = sc.textFile(args.readPath, 1000).map(json.loads)
+    bundles = sc.textFile(args.readPath).map(json.loads)
 
     # extract tuples of pertinent information - (ID, resourceType, date, sys, code)
-    tupes = bundles.flatMap(generateTuples) # .repartition(1000) is this helpful???????
+    tupes = bundles.flatMap(generateTuples).repartition(1000) # is this helpful???????
 
     # get count of tuple level duplication
     tupes_counted = tupes.map(lambda x: (x, 1)).reduceByKey(lambda x, y: x + y)
