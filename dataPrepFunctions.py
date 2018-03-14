@@ -49,7 +49,6 @@ def extractFromEvents(entryList):
     """
 
     entryInformation = []  # list to return
-    count = 0  # counter for error identification
 
     # ID errors
     errorIndex = []
@@ -59,7 +58,7 @@ def extractFromEvents(entryList):
 
         # easy typing
         resourceType = x['resource']['resourceType']
-        extraction = False
+        extraction = False # skip resourceTypes not one of the four below
 
         try:
 
