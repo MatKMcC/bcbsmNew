@@ -26,7 +26,7 @@ if __name__ == '__main__':
     bundles = sc.textFile(args.readPath).map(json.loads)
 
     # extract tuples of pertinent information - (ID, resourceType, date, sys, code)
-    tupes = bundles.flatMap(generateTuples).coalesce(1000) # is this helpful???????
+    tupes = bundles.flatMap(generateTuples).repartition(1000) # is this helpful???????
 
     # get count of tuple level duplication
     tupes_counted = tupes.map(lambda x: (x, 1)).reduceByKey(lambda x, y: x + y)
@@ -40,4 +40,4 @@ if __name__ == '__main__':
     tupes_counted = tupes_counted.map(lambda x: ', '.join(map(str,x)))
 
     # repartition and write out balanced RDDs
-    tupes_counted.repartition(1000).saveAsTextFile(args.writePath)
+    tupes_counted.saveAsTextFile(args.writePath)
