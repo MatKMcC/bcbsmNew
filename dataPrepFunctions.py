@@ -60,7 +60,6 @@ def extractFromEvents(entryList):
 
         # easy typing
         resourceType = x['resource']['resourceType']
-        extraction = False
 
         try:
 
@@ -71,7 +70,7 @@ def extractFromEvents(entryList):
                 extraction = observationExtract(x)
             elif resourceType == 'Procedure':
                 extraction = procedureExtract(x)
-            elif resourceType == 'MedicationOrder' or resourceType == 'MedicationRequest':
+            elif resourceType in ('MedicationOrder', 'MedicationRequest'):
                 extraction = medicationExtract(x)
 
         except IndexError:
@@ -82,10 +81,7 @@ def extractFromEvents(entryList):
             extraction = ('TypeError')
 
         # append the information that we are interested in
-        if extraction: entryInformation.append(extraction)
-
-        # reference point for errors
-        count += 1
+        entryInformation.append(extraction)
 
     return entryInformation
 
@@ -190,11 +186,11 @@ def medicationExtract(medicationEntry):
     entry = medicationEntry['resource']
 
     # extract patient ID - last eight numbers seem to be the same across
-    patientID = entry['patient']['reference'].split('/')[1]
+    patientID = entry['subject']['reference'].split('/')[1]
 
     # extract date - note that in medication orders there is a date range
     # the dateWritten is assumed to be appropriate
-    date = entry['dateWritten']
+    date = entry['authoredOn'][:10]
 
     # extract stem for code related information
     codeStem = entry['medicationCodeableConcept']['coding'][0]
@@ -205,4 +201,4 @@ def medicationExtract(medicationEntry):
     # extract code
     code = codeStem['code']
 
-    return (patientID, 'MedicationOrder', date, system, code)
+    return (patientID, 'MedicationRequest', date, system, code)
