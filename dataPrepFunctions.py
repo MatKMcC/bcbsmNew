@@ -59,6 +59,7 @@ def extractFromEvents(entryList):
 
         # easy typing
         resourceType = x['resource']['resourceType']
+        extraction = False
 
         try:
 
@@ -80,7 +81,7 @@ def extractFromEvents(entryList):
             extraction = ('TypeError')
 
         # append the information that we are interested in
-        entryInformation.append(extraction)
+        if extraction: entryInformation.append(extraction)
 
     return entryInformation
 
