@@ -31,8 +31,13 @@ if __name__ == '__main__':
     # get count of tuple level duplication
     tupes_counted = tupes.map(lambda x: (x, 1)).reduceByKey(lambda x, y: x + y)
 
-    # flatten the results - better flatten function
+    # the following two could be simplified by saving as a pickle object?
+
+    # flatten the results - for csv
     tupes_counted = tupes_counted.map(lambda x: tuple(flatten(x)))
 
+    # I assume that spark automatically optimized the code above and here?
+    tupes_counted = tupes_counted.map(lambda x: ', '.join(map(str,x)))
+
     # repartition and write out balanced RDDs
-    tupes_counted.repartition(1000).map(lambda x: ', '.join(map(str,x))).saveAsTextFile(args.writePath)
+    tupes_counted.repartition(1000).saveAsTextFile(args.writePath)
