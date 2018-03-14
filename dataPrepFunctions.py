@@ -91,7 +91,7 @@ def conditionExtract(conditionEvent):
     This function expects a top level event object
     extracted directly from an event list
     :param conditionEvent: An event object with 'resourceType' equal to 'Condition'
-    :return: a tuple with (id, date, system, code)
+    :return: a tuple with (id, resourceType, date, system, code)
     id -
     """
 
